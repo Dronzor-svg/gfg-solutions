@@ -2,25 +2,25 @@ class Solution {
     public int maxWater(int arr[]) {
         // code here
         int lmax=0;
-        int total=0;
         int rmax=0;
-        int left=0;
-        int right=arr.length-1;
-        while(left<right)
+        int total=0;
+        int l=0;
+        int r=arr.length-1;
+        while(l<r)
         {
-            if(arr[left]<=arr[right])
+            if(arr[l]<=arr[r])
             {
-                if(lmax>arr[left]) total+=lmax-arr[left];
-                else lmax=arr[left];
-                left++;
+                if(lmax>arr[l]) total+=lmax-arr[l];
+                else lmax=arr[l];
+                l=l+1;
             }
             else
             {
-                if(rmax>arr[right]) total+=rmax-arr[right];
-                else rmax=arr[right];
-                right--;
+                if(rmax>arr[r]) total+=rmax-arr[r];
+                else rmax=arr[r];
+                r=r-1;
             }
         }
-        return total;
+        return total; 
     }
 }
