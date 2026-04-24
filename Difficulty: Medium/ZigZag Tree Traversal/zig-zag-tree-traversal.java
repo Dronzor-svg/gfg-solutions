@@ -1,34 +1,45 @@
+/*
+class Node {
+    int data;
+    Node left,right;
+    Node(int d)
+    {
+        data=d;
+        left=right=null;
+    }
+}
+*/
+
 class Solution {
     ArrayList<Integer> zigZagTraversal(Node root) {
-        ArrayList<Integer> result = new ArrayList<>();
-        if (root == null) return result;
-
-        Queue<Node> q = new LinkedList<>();
-        q.offer(root);
-
-        boolean leftToRight = true;
-
-        while (!q.isEmpty()) {
-            int size = q.size();
-            LinkedList<Integer> level = new LinkedList<>();
-
-            for (int i = 0; i < size; i++) {
-                Node frontNode = q.poll();
-
-                if (leftToRight) {
-                    level.addLast(frontNode.data);
-                } else {
-                    level.addFirst(frontNode.data);
-                }
-
-                if (frontNode.left != null) q.offer(frontNode.left);
-                if (frontNode.right != null) q.offer(frontNode.right);
-            }
-
-            result.addAll(level);
-            leftToRight = !leftToRight;
+        // code here
+        ArrayList<Integer> list=new ArrayList<>();
+        Queue<Node> q=new LinkedList<>();
+        if(root==null)
+        {
+            return list;
         }
-
-        return result;
+        q.add(root);
+        boolean leftToRight=true;
+        while(!q.isEmpty())
+        {
+            int size=q.size();
+            int[] arr=new int[size];
+            for(int i=0;i<size;i++)
+            {
+                Node temp=q.poll();
+                int index=leftToRight ? i : size-1-i;
+                arr[index]=temp.data;
+                
+                if(temp.left!=null) q.add(temp.left);
+                if(temp.right!=null) q.add(temp.right);
+            }
+            for(int i=0;i<arr.length;i++)
+            {
+                list.add(arr[i]);
+            }
+            leftToRight=!leftToRight;
+        }
+        return list;
     }
 }
