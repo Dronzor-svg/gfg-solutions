@@ -13,29 +13,45 @@ class Node {
 class Solution {
     public ArrayList<Integer> topView(Node root) {
         // code here
-        ArrayList<Integer> li = new ArrayList<>();
-        if(root == null) return li;
-        Map<Integer,Integer> mp = new TreeMap<>();
-        Queue<Node> qn=new LinkedList<>();
-        Queue<Integer> q = new LinkedList<>();
-        qn.add(root);
-        q.add(0);
-        
-        while(!qn.isEmpty()){
-            Node node = qn.poll();
-            int h = q.poll();
-            mp.putIfAbsent(h,node.data);
+        ArrayList<Integer> ans=new ArrayList<>();
+        if(root==null) return ans;
+        TreeMap<Integer,Integer> mpp=new TreeMap<>();
+        Queue<Pair> q=new LinkedList<>();
+        q.offer(new Pair(root,0));
+        while(!q.isEmpty())
+        {
+            Pair temp=q.poll();
+            Node frontNode=temp.node;
+            int hd=temp.hd;
             
-            if(node.left!=null){
-                qn.add(node.left);
-                q.add(h-1);
+            if(!mpp.containsKey(hd))
+            {
+                mpp.put(hd,frontNode.data);
             }
-            if(node.right!=null){
-                qn.add(node.right);
-                q.add(h+1);
+            
+            if(frontNode.left!=null)
+            {
+                q.offer(new Pair(frontNode.left,hd-1));
+            }
+            if(frontNode.right!=null)
+            {
+                q.offer(new Pair(frontNode.right,hd+1));
             }
         }
-        li.addAll(mp.values());
-        return li;
+        for(Map.Entry<Integer,Integer> entry : mpp.entrySet())
+        {
+            ans.add(entry.getValue());
+        }
+        return ans;
+    }
+}
+class Pair
+{
+    Node node;
+    int hd;
+    Pair(Node node,int hd)
+    {
+        this.node=node;
+        this.hd=hd;
     }
 }
